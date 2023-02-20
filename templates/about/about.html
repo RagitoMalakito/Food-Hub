@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+{%load static%}
+{% load food_hub_templatetags %}
+<html lang="en">
+	{% load pwa %}
+	{% progressive_web_app_meta %}
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About</title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+	<!-- custom css file link -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+
+<!-- header section start -->
+
+<header class="header">
+	
+	<section class="flex">
+		
+		<a href="home.html" class="logo">Food HUB 😋</a>
+
+		<nav class="navbar">
+			<a href="home.html">Home</a>
+			<a href="about.html">About</a>
+			<a href="menu.html">Menu</a>
+			<a href="orders.html">Orders</a>
+			<a href="contact.html">Contact</a>
+		</nav>
+
+		<div class="icons">
+			<a href="search.html"><i class="fas fa-search"></i></a>
+			<a href="cart.html">
+				<i class="fas fa-shopping-cart"></i>
+				{% if user.is_authenticated %}
+				{% count_pending_orders user.customer as pending_orders %}
+				{% if not pending_orders == 0 %}
+				<span>({{pending_orders}})</span>
+				{% endif %}
+				{% endif %}
+			</a>
+			<div id="user-btn" class="fas fa-user"></div>
+			<div id="menu-btn" class="fas fa-bars"></div>
+		</div>
+
+		<div class="profile">
+			{% if user.is_authenticated %}
+			<p class="name">Hello! {{user.customer.fname|title}}</p>
+			<div class="flex">
+				<a href="profile.html" class="btn">Profile</a>
+				<a href="{% url 'user_logout'%}" class="delete-btn">Logout</a>
+			</div>
+			{% elif user.is_superuser %}
+			<div class="flex">
+				<a href="profile.html" class="btn">Profile</a>
+				<a href="{% url 'user_logout'%}" class="delete-btn">Logout</a>
+			</div>
+			{% else %}
+			<p class="flex"><a href="login.html" class="btn">Login</a> or <a href="register.html" class="delete-btn">Register</a></p>
+		</div>
+			{% endif %}
+
+	</section>
+
+</header>
+
+<!-- header section end -->
+
+<div class="heading">
+	<h3>About</h3>
+	<p><a href="home.html">Home</a><span> / About</span></p>
+</div>
+
+<!-- about section start -->
+
+<section class="about">
+	<button onclick="smoothScrollToBottom()"class="delete-btn">▼</button>
+	<div class="row">
+		
+		<div class="image">
+			<img src="{% static 'images/about-img.svg' %}">
+		</div>
+
+		<div class="content">
+			<h3>Choose your Food in different store here in our website!</h3>
+			<p>The development of this digital platform local food hub is a online marketplace that connects food stall owners with consumers in the community. 
+				Our goal is to make it easier for people to access local food online. </p>
+			<p>We believe that by using technology to facilitate the distribution of local foods, we can improve access to a fast and enjoyable food options while supporting small, sustainable businesses in the community. 
+				Our platform offers a wide variety of products, from Snacks and drinks to different Filipino dishes all sourced from local stores.</p>
+			<p>We're proud to be a part of the digital local food hub and we're committed to promoting a more efficient and reliable food. 
+				Our platform provides a convenient and accessible way for consumers to find and purchase delicious food, and we hope that the development of this digital platform will support communities for years to come.</p>
+			<a href="menu.html" class="btn">Check Our Menu</a>
+		</div>
+
+	</div>
+
+</section>
+
+<!-- about section end -->
+
+<!-- step section start -->
+
+<section class="steps">
+	
+	<h1 class="title">Customer Care</h1>
+
+	<div class="box-container">
+		
+		<div class="box">
+			<img src="{% static 'images/step-1.png' %}">
+			<h3>Select Order</h3>
+			<p>We understand the importance of providing our customers with selecting high-quality products and excellent service.
+				That's why we take great care in fulfilling orders to ensure that every customer is satisfied with their purchase.</p>
+		</div>
+
+		<div class="box">
+			<img src="{% static 'images/step-2.png' %}">
+			<h3>Efficient Delivery</h3>
+			<p>We understand the importance of timely and efficient delivery, every order is carefully packaged and dispatched as quickly as possible.
+				We are committed to providing the best possible delivery experience for all of our customers.</p>
+		</div>
+
+		<div class="box">
+			<img src="{% static 'images/step-3.png' %}">
+			<h3>Enjoy Food</h3>
+			<p>Food is meant to be enjoyed, that's why we strive to provide our customers with the freshest and highest quality product. 
+				Our goal is to make it easy and convenient for customers to enjoy delicious and wholesome meals to provide best dining experience.</p>
+		</div>
+
+	</div>
+
+</section>
+
+<!-- step section end -->
+
+<!-- review section start -->
+
+<section class="reviews">
+	
+	<h1 class="title">Customer's Reviews</h1>
+
+	<div class="swiper reviews-slider">
+		
+		<div class="swiper-wrapper">
+			{%for reviews in all_reviews %}
+			<div class="swiper-slide slide">
+				<h3>{{reviews.customer.fname}} {{reviews.customer.lname}}</h3>
+				<p>{{reviews.text}}</p>
+				{%if reviews.rating == 1%}
+				<div class="stars">
+					<i class="fas fa-star"></i>
+				</div>
+				{%elif reviews.rating == 2%}
+				<div class="stars">
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+				</div>
+				{%elif reviews.rating == 3%}
+				<div class="stars">
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+				</div>
+				{%elif reviews.rating == 4%}
+				<div class="stars">
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+				</div>
+				{%elif reviews.rating == 5%}
+				<div class="stars">
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+					<i class="fas fa-star"></i>
+				</div>
+				{%endif%}
+			</div>
+			{%endfor%}
+		</div>
+
+		<div class="swiper-pagination"></div>
+
+	</div>
+</section>
+
+<section class="contact">
+
+	<div class="row">
+		<form method="post">
+			{% csrf_token %}
+			<h3>Send us a review</h3>
+			{% for message in messages %}
+				<h1>{{message}}</h1>
+			{% endfor %}
+			<textarea name="text" class="box" required placeholder="Enter Your Message" maxlength="500" id="" cols="30" rows="10"></textarea>
+			Rating: <i class="fas fa-star"></i>
+			<select name="rating">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			<br><br>
+			<input type="submit" value="Send Review" name="send" class="btn">
+
+		</form>
+	</div>
+	<br>
+	<button onclick="smoothScrollToTop()" class="delete-btn">▲</button>
+</section>
+
+<!-- review section end -->
+
+<!-- footer section start -->
+
+<footer class="footer">
+	
+	<section class="grid">
+		
+		<div class="box">
+			<img src="{% static 'images/email-icon.png'%}">
+			<h3>Email</h3>
+			<a href="mailto:ragitjoshua026@gmail.com">ragitjoshua026@gmail.com</a>
+		</div>
+
+		<div class="box">
+			<img src="{% static 'images/clock-icon.png'%}">
+			<h3>Opening/Closing Hour</h3>
+			<p>07:00am to 05:00pm</p>
+		</div>
+
+		<div class="box">
+			<img src="{% static 'images/map-icon.png'%}">
+			<h3>Address</h3>
+			<a href="#">Irene St. Miramonte Subd. Lucban, Quezon</a>
+		</div>
+
+		<div class="box">
+			<img src="{% static 'images/phone-icon.png'%}">
+			<h3>Phone Number</h3>
+			<a href="tel:5401234">540-1234</a>
+
+		</div>
+
+	</section>
+
+	<div class="credit">
+		All Rights Reserved 2022 <span>Foodhub ©</span>
+	</div>
+
+</footer>
+
+<!-- footer section end -->
+
+<div class="loader">
+	<img src="{% static 'images/loader.gif'%}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+<!-- custom js file link -->
+<script src="{% static 'js/script.js'%}"></script>
+
+<script>
+var swiper = new Swiper(".reviews-slider", {
+	loop: true,
+	grabCursor: true,
+	spaceBetween: 20,
+	pagination: {
+		el:".swiper-pagination",
+		clickable: true,
+	},
+	breakpoints: {
+		0: {
+			slidesPerView: 1,			
+		},
+		700: {
+			slidesPerView: 2,
+		},
+		1024: {
+			slidesPerView: 3,
+		},
+	},
+});	
+</script>
+
+<script>
+	function smoothScrollToTop() {
+	  let currentPosition = window.pageYOffset;
+	  let targetPosition = 0;
+	  let distance = targetPosition - currentPosition;
+	  let duration = 1000; // in milliseconds
+	  let start = null;
+	
+	  function step(timestamp) {
+		if (!start) start = timestamp;
+		let progress = timestamp - start;
+		window.scrollTo(0, easeInOutCubic(progress, currentPosition, distance, duration));
+		if (progress < duration) window.requestAnimationFrame(step);
+	  }
+	
+	  window.requestAnimationFrame(step);
+	
+	  // easing function for smooth scrolling
+	  function easeInOutCubic(t, b, c, d) {
+		t /= d/2;
+		if (t < 1) return c/2*t*t*t + b;
+		t -= 2;
+		return c/2*(t*t*t + 2) + b;
+	  }
+	}
+</script>
+
+<script>
+	function smoothScrollToBottom() {
+	  let currentPosition = window.pageYOffset;
+	  let targetPosition = document.body.scrollHeight;
+	  let distance = targetPosition - currentPosition;
+	  let duration = 1000; // in milliseconds
+	  let start = null;
+	
+	  function step(timestamp) {
+		if (!start) start = timestamp;
+		let progress = timestamp - start;
+		window.scrollTo(0, easeInOutCubic(progress, currentPosition, distance, duration));
+		if (progress < duration) window.requestAnimationFrame(step);
+	  }
+	
+	  window.requestAnimationFrame(step);
+	
+	  // easing function for smooth scrolling
+	  function easeInOutCubic(t, b, c, d) {
+		t /= d/2;
+		if (t < 1) return c/2*t*t*t + b;
+		t -= 2;
+		return c/2*(t*t*t + 2) + b;
+	  }
+	}
+</script>
+
+</body>
+</html>
