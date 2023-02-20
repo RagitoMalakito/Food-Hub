@@ -16,8 +16,8 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=50, null=True, blank=True)
     email = models.CharField(max_length=50, null=True, blank=True)
 
-    class Meta:
-        verbose_name_plural = 'Customers'
+    # class Meta:
+    #     verbose_name_plural = 'Customers'
 
     def __str__(self) :
         return self.fname + " : " + self.lname 
@@ -32,8 +32,8 @@ class ProductList(models.Model):
     product_price = models.IntegerField()
     stocks = models.IntegerField()
 
-    class Meta:
-        verbose_name_plural = 'Product List'
+    # class Meta:
+    #     verbose_name_plural = 'Product List'
 
     def __str__(self) :
         return str(self.stall_owner.customer.stall_name) + " : " + str(self.product_name) + " : " + str(self.product_price)
@@ -51,12 +51,12 @@ class AddedToCart(models.Model):
     cart_id = models.CharField(max_length=255, default=None)
     order_id = models.CharField(max_length = 255, blank = True, null = True, default = None)
 
-    def save(self, *args, **kwargs):
-        self.total_items = self.quantity
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.total_items = self.quantity
+    #     super().save(*args, **kwargs)
 
-    class Meta:
-        verbose_name_plural = 'Cart'
+    # class Meta:
+    #     verbose_name_plural = 'Cart'
 
     def __str__(self):
         return "Is-Pending : " + str(self.is_pending) + " : " + str(self.customer.fname) + " : " + str(self.product.product_name) + " : " + str(self.quantity)
@@ -72,8 +72,8 @@ class Orders(models.Model):
     date_ordered = models.DateTimeField()
     order_id = models.CharField(max_length=50)
 
-    class Meta:
-        verbose_name_plural = 'Orders'
+    # class Meta:
+    #     verbose_name_plural = 'Orders'
 
     def __str__(self):
         return str(self.customer.fname) + " : " + str(self.customer.delivery_address) + " : Total : " + str(self.total) + " : " + str(self.estimated_time)
