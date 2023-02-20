@@ -26,7 +26,7 @@ class Customer(models.Model):
 
 class ProductList(models.Model):
     stall_owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    product_id  = models.CharField(max_length=50, blank=True, primary_key=True)
+    product_id  = models.CharField(max_length=50, blank=True)
     product_image = models.ImageField(null=True, blank=True, upload_to='product_images/')
     product_name = models.CharField(max_length=50, null=True, blank=True)
     product_price = models.IntegerField()
@@ -48,7 +48,7 @@ class AddedToCart(models.Model):
     is_selected = models.BooleanField(default=False)
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField()
-    cart_id = models.CharField(primary_key= True, max_length=255, unique=True, default=None)
+    cart_id = models.CharField(max_length=255, default=None)
     order_id = models.CharField(max_length = 255, blank = True, null = True, default = None)
 
     def save(self, *args, **kwargs):
@@ -70,7 +70,7 @@ class Orders(models.Model):
     total_orders = models.IntegerField(default=0)
     estimated_time = models.IntegerField()
     date_ordered = models.DateTimeField()
-    order_id = models.CharField(max_length=50, unique=True)
+    order_id = models.CharField(max_length=50)
 
     class Meta:
         verbose_name_plural = 'Orders'
