@@ -113,9 +113,9 @@
 			<option value="Tiawe">Tiawe</option>
 			<option value="Tinamnan">Tinamnan</option>
 		</select>
-		<input type="text" name="address" required placeholder="Delivery Address" class="box" maxlength="100" value="{{user.customer.delivery_address}}">
-		<input type="text" name="phone_number" required placeholder="Phone Number" class="box" maxlength="100" value="{{user.customer.phone_number}}">
-		<input type="email" name="email" required placeholder="Email Address" class="box" maxlength="100" value="{{user.customer.email}}">
+		<input type="text" name="address" required placeholder="Delivery Address" class="box" maxlength="50" value="{{user.customer.delivery_address}}">
+		<input type="text" name="phone_number" required placeholder="Phone Number" class="box" maxlength="50" value="{{user.customer.phone_number}}">
+		<input type="email" name="email" required placeholder="Email Address" class="box" maxlength="50" value="{{user.customer.email}}">
 		<input type="submit" value="Save Address" name="submit" class="btn">
 		{% if messages %}
     <ul class="messages">
