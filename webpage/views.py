@@ -555,7 +555,13 @@ def graphs(request):
 def chart(request):
     # Get the total quantity of items added to cart, grouped by product
     data = AddedToCart.objects.filter(product__stall_owner=request.user, is_ordered=True).values('product').annotate(total=Sum('quantity')).order_by('product')
-    labels = [ProductList.objects.get(product_id=d['product']).product_name for d in data]
+    labels = []
+    for d in data:
+        product_id = d['product']
+        product = ProductList.objects.get(product_id=product_id)
+        product_name = product.product_name
+        labels.append(product_name)
+    # labels = [ProductList.objects.get(product_id=d['product']).product_name for d in data]
     values = [d['total'] for d in data]
 
     context = {
