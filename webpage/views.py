@@ -568,7 +568,7 @@ def chart(request):
     #     product = ProductList.objects.get(product_id__exact=product_id)
     #     product_name = product.product_name
     #     labels.append(product_name)
-    # # labels = [ProductList.objects.get(product_id=d['product']).product_name for d in data]
+    # labels = [ProductList.objects.get(product_id=d['product']).product_name for d in data]
     # values = [d['total'] for d in data]
 
     # context = {
