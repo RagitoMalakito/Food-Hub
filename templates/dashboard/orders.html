@@ -97,7 +97,15 @@
 				{% endfor %}
 			<p>Total Amount : <span> {{items.1}}</span></p>
 			<p>Payment Method : <span>COD</span></p>
-			<p>Status : <span style="color: var(--red);">Completed</span></p>
+			<p>Status : 
+				<span style="color: var(--red);">
+					{% if items.2 == True %}
+					Completed
+					{% else %}
+					Pending
+					{% endif %}
+				</span>
+			</p>
 		</div>
 		{% endfor %}
 		{% endif %}

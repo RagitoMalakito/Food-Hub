@@ -45,9 +45,14 @@ def get_items_of_my_order(my_orders):
     added_to_cart = AddedToCart.objects.filter(order_id = my_orders.order_id).all()
 
     i = 0
+    is_pending = None
 
     for cart in added_to_cart:
         i = i + cart.total_of_items
+        if cart.is_pending == True:
+            is_pending = True
+        else:
+            is_pending = False
 
-    return added_to_cart, i 
+    return added_to_cart, i, is_pending 
 
