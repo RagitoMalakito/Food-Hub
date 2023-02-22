@@ -639,3 +639,12 @@ def change_password(request):
     else:
         return render(request, "change_password.html")
 
+def orders_table(request):
+    products = AddedToCart.objects.filter(is_ordered=True).all()
+    orders = Orders.objects.filter(shop_owner=request.user).all()
+    context = {
+        'products': products,
+        'orders': orders,
+    }
+
+    return render(request,'admin/orders_table.html',context)
